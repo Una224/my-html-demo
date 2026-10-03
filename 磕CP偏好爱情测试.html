@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>你磕的CP，暴露了你理想中的爱情</title>
+<meta name="description" content="25题顶配数据版CP上头值测试：捕捉你的嗑糖偏好，生成四维上头值、主辅人格画像、理想型匹配与适配CP全套报告。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E8625F'/%3E%3Cpath d='M16 24s-7.5-4.6-7.5-9.8c0-2.4 1.9-4.2 4.2-4.2 1.6 0 2.7.8 3.3 1.9.6-1.1 1.7-1.9 3.3-1.9 2.3 0 4.2 1.8 4.2 4.2 0 5.2-7.5 9.8-7.5 9.8z' fill='%23FFF7F4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://miaoda.feishu.cn">
+<link href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFF7F4; --bg2:#FBEDE6; --card:#FFFFFF;
+  --ink:#4A322B; --ink2:#9C7B6E; --line:#F2DED3;
+  --rose:#E8625F; --rose2:#C94B52; --rose-soft:#FDEBE7;
+  --A:#D4576E; --A-soft:#FBE7EC;
+  --B:#5E7FB0; --B-soft:#E9EFF8;
+  --C:#E29A3C; --C-soft:#FBF1E0;
+  --D:#B0764E; --D-soft:#F5EADF;
+  --r-lg:24px; --r-md:18px; --r-sm:14px;
+  --shadow:0 14px 44px rgba(178,110,84,.14);
+  --shadow-sm:0 6px 20px rgba(178,110,84,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Noto Serif SC","Source Han Serif SC","Songti SC","SimSun",serif;
+  background:var(--bg); color:var(--ink);
+  font-size:16px; line-height:1.85;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  min-height:100vh;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:inherit}
+::selection{background:var(--rose-soft);color:var(--rose2)}
+
+/* ===== 通用视图 ===== */
+.view{display:none;min-height:100vh;position:relative}
+.view.active{display:block;animation:viewIn .5s ease both}
+@keyframes viewIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.wrap{max-width:680px;margin:0 auto;padding:0 20px}
+.section-title{font-size:22px;font-weight:900;text-align:center;letter-spacing:.04em;margin-bottom:6px}
+.section-sub{text-align:center;color:var(--ink2);font-size:14px;margin-bottom:26px}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--rose2);
+  letter-spacing:.18em;background:var(--rose-soft);border:1px solid #F6CFC6;border-radius:999px;padding:6px 14px}
+.kicker svg{flex:none}
+
+/* ===== 按钮 ===== */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-weight:700;font-size:16px;line-height:1;padding:15px 30px;border-radius:999px;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease, opacity .18s ease;
+  user-select:none; -webkit-tap-highlight-color:transparent;
+}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:linear-gradient(135deg,var(--rose) 0%,#F0847A 100%);color:#fff;
+  box-shadow:0 10px 26px rgba(232,98,95,.38)}
+.btn-primary:hover{box-shadow:0 14px 30px rgba(232,98,95,.48)}
+.btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:#E8B9A8}
+.btn.disabled{opacity:.45;pointer-events:none;box-shadow:none}
+.btn.small{padding:10px 18px;font-size:14px}
+.btn:focus-visible{outline:3px solid rgba(232,98,95,.45);outline-offset:2px}
+
+/* ===== 首页 ===== */
+.home{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100vh;text-align:center;padding:60px 20px 48px;position:relative;overflow:hidden}
+.home-bg{position:absolute;inset:0;pointer-events:none;z-index:0}
+.home-bg .blob{position:absolute;border-radius:50%;filter:blur(2px)}
+.home-bg .blob.b1{width:420px;height:420px;background:radial-gradient(circle,#FAD9CE 0%,transparent 70%);top:-140px;right:-120px}
+.home-bg .blob.b2{width:380px;height:380px;background:radial-gradient(circle,#FBE6DC 0%,transparent 70%);bottom:-120px;left:-120px}
+.home-bg .heart{position:absolute;opacity:.16}
+.home-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;max-width:640px}
+.home-logo{display:inline-flex;align-items:center;gap:10px;font-weight:700;color:var(--rose2);font-size:14px;
+  letter-spacing:.22em;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 18px;margin-bottom:30px;
+  box-shadow:var(--shadow-sm)}
+.home h1{font-size:clamp(30px,6.4vw,52px);font-weight:900;line-height:1.35;letter-spacing:.02em;margin-bottom:18px}
+.home h1 em{font-style:normal;color:var(--rose)}
+.home .lead{color:var(--ink2);font-size:15px;max-width:34em;margin-bottom:26px}
+.home .lead b{color:var(--ink)}
+.dim-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%;margin-bottom:34px}
+.dim-chip{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 8px 10px;box-shadow:var(--shadow-sm)}
+.dim-chip .dot{width:10px;height:10px;border-radius:50%;margin:0 auto 8px}
+.dim-chip .dn{font-size:13px;font-weight:700;line-height:1.4}
+.dim-chip .dd{font-size:12px;color:var(--ink2);line-height:1.5;margin-top:2px}
+.home-cta{display:flex;flex-direction:column;align-items:center;gap:12px}
+.home-note{font-size:12.5px;color:var(--ink2)}
+
+/* ===== 答题页 ===== */
+.quiz{background:var(--bg);min-height:0;height:100vh;height:100dvh;overflow:hidden}
+.view.quiz.active{display:flex}
+.quiz-shell{max-width:640px;margin:0 auto;padding:22px 20px max(14px,env(safe-area-inset-bottom));height:100%;width:100%;display:flex;flex-direction:column}
+.quiz-top{flex:none;margin-bottom:20px}
+.quiz-topbar{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.progress-track{flex:1;height:9px;background:#F2DFD4;border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--rose2),var(--rose) 60%,#F0A27A);
+  transition:width .45s cubic-bezier(.4,0,.2,1)}
+.q-counter{font-size:14px;font-weight:700;color:var(--rose2);white-space:nowrap;font-variant-numeric:tabular-nums}
+.q-counter b{font-size:20px}
+.quiz-sub{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--ink2)}
+.dim-legend{display:flex;gap:10px;flex-wrap:wrap}
+.dim-legend span{display:inline-flex;align-items:center;gap:5px}
+.dim-legend i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.quiz-card{background:var(--card);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:30px 26px 26px;margin-bottom:12px;flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scrollbar-width:thin}
+.q-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.q-no{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--rose2);letter-spacing:.12em}
+.q-no .num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:10px;
+  background:var(--rose-soft);color:var(--rose2);font-size:15px}
+.q-tag{font-size:12px;color:var(--ink2);background:var(--bg2);border-radius:999px;padding:3px 10px}
+.q-title{font-size:clamp(19px,4.6vw,23px);font-weight:900;line-height:1.6;margin-bottom:22px;letter-spacing:.01em}
+.opts{display:flex;flex-direction:column;gap:12px}
+.opt{display:flex;gap:14px;align-items:flex-start;text-align:left;width:100%;
+  background:#fff;border:2px solid var(--line);border-radius:var(--r-md);padding:14px 16px;
+  transition:border-color .2s ease, background .2s ease, transform .12s ease;cursor:pointer;line-height:1.65}
+.opt:hover{border-color:#EBC0AE;transform:translateY(-1px)}
+.opt:active{transform:scale(.99)}
+.opt .badge{flex:none;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;margin-top:1px;
+  border-radius:50%;font-weight:700;font-size:15px;color:var(--ink2);background:var(--bg2);
+  border:1.5px solid var(--line);transition:all .2s ease}
+.opt .txt{flex:1;font-size:15px}
+.opt.selected{border-color:var(--rose);background:var(--rose-soft)}
+.opt.selected .badge{background:var(--rose);border-color:var(--rose);color:#fff}
+.quiz-nav{display:flex;gap:12px;align-items:center;flex:none}
+.quiz-nav .btn{flex:1}
+.q-hint{text-align:center;font-size:13px;color:var(--ink2);min-height:22px;margin-top:10px}
+.q-anim{animation:qIn .38s ease both}
+@keyframes qIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+
+/* ===== 结果页 ===== */
+.result{background:var(--bg)}
+.result-shell{max-width:760px;margin:0 auto;padding:34px 20px 60px}
+.hero-card{background:linear-gradient(160deg,#FFFDFB 0%,var(--bg2) 100%);
+  border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);
+  padding:40px 28px 36px;text-align:center;position:relative;overflow:hidden;margin-bottom:26px}
+.hero-card::before{content:"";position:absolute;top:-70px;right:-70px;width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle,rgba(232,98,95,.16),transparent 70%)}
+.hero-card::after{content:"";position:absolute;bottom:-80px;left:-60px;width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(226,154,60,.14),transparent 70%)}
+.hero-inner{position:relative;z-index:1}
+.hero-label{font-size:13px;letter-spacing:.2em;color:var(--ink2);margin-bottom:12px;font-weight:700}
+.hero-type{font-size:clamp(28px,6vw,42px);font-weight:900;line-height:1.3;margin-bottom:6px;letter-spacing:.02em}
+.hero-type .main{color:var(--rose2)}
+.hero-sub{font-size:14.5px;color:var(--ink2);margin-bottom:18px}
+.hero-sub b{color:var(--ink)}
+.hero-mix{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink);background:#fff;
+  border:1px solid var(--line);border-radius:999px;padding:7px 16px;box-shadow:var(--shadow-sm)}
+.hero-mix svg{flex:none}
+.hero-actions{display:flex;gap:10px;justify-content:center;margin-top:24px;flex-wrap:wrap}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);
+  padding:26px 24px;margin-bottom:22px}
+.card-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.card-head .ci{flex:none;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;
+  border-radius:13px}
+.card-head h3{font-size:18px;font-weight:900;letter-spacing:.03em}
+.card-head .en{font-size:11.5px;color:var(--ink2);letter-spacing:.14em}
+
+/* 得分总览 */
+.score-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.score-cell{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:14px 8px 12px;text-align:center}
+.score-cell .sc-dot{width:10px;height:10px;border-radius:50%;margin:0 auto 8px}
+.score-cell .sc-name{font-size:12px;font-weight:700;line-height:1.4}
+.score-cell .sc-num{font-size:24px;font-weight:900;line-height:1.3;font-variant-numeric:tabular-nums}
+.score-cell .sc-total{font-size:11px;color:var(--ink2)}
+
+/* 维度图 */
+.radar-box{width:100%;height:300px;position:relative}
+.radar-fallback{width:100%;height:300px;display:flex;align-items:center;justify-content:center}
+.bar-list{margin-top:20px;display:flex;flex-direction:column;gap:16px}
+.bar-row .bar-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
+.bar-row .bar-name{font-size:14.5px;font-weight:700;display:inline-flex;align-items:center;gap:8px}
+.bar-row .bar-name i{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}
+.bar-row .bar-name small{font-weight:400;color:var(--ink2);font-size:12px}
+.bar-row .bar-val{font-weight:900;font-size:16px;font-variant-numeric:tabular-nums}
+.bar-row .bar-val small{font-size:11.5px;color:var(--ink2);font-weight:400;margin-left:2px}
+.bar-track{height:12px;background:#F4E3D8;border-radius:999px;overflow:hidden}
+.bar-fill{height:100%;border-radius:999px;width:0;transition:width 1.1s cubic-bezier(.22,.8,.3,1)}
+.bar-ticks{display:flex;justify-content:space-between;font-size:10.5px;color:var(--ink2);margin-top:4px;padding:0 2px}
+
+/* 四维分项解读 */
+.tier-cards{display:flex;flex-direction:column;gap:16px}
+.tier-card{border:1px solid var(--line);border-radius:var(--r-md);padding:18px 18px 16px;background:#fff}
+.tier-top{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.tier-name{font-weight:900;font-size:15.5px}
+.tier-tag{font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;letter-spacing:.05em}
+.tier-tag.high{background:var(--A-soft);color:var(--rose2)}
+.tier-tag.mid{background:var(--C-soft);color:#A86F1E}
+.tier-tag.low{background:#EEF0F2;color:#7E8A94}
+.tier-mini{flex:1;text-align:right;font-size:12px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.tier-text{font-size:13.5px;color:#5F463D;line-height:1.8}
+
+/* 人格画像 */
+.profile-hero{display:flex;gap:18px;align-items:center;margin-bottom:18px;flex-wrap:wrap}
+.profile-icon{flex:none;width:74px;height:74px;border-radius:22px;display:flex;align-items:center;justify-content:center;color:#fff}
+.profile-title{flex:1;min-width:200px}
+.profile-title .pt1{font-size:24px;font-weight:900}
+.profile-title .pt2{font-size:13px;color:var(--ink2);margin-top:2px}
+.profile-block{margin-bottom:18px}
+.profile-block:last-child{margin-bottom:0}
+.profile-block h4{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:900;margin-bottom:8px}
+.profile-block h4 svg{flex:none}
+.profile-block p,.profile-block li{font-size:14px;color:#5F463D;line-height:1.9}
+.profile-block ul{list-style:none}
+.profile-block li{position:relative;padding-left:18px;margin-bottom:4px}
+.profile-block li::before{content:"";position:absolute;left:2px;top:12px;width:6px;height:6px;border-radius:50%;background:var(--rose)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:13px;font-weight:600;padding:6px 13px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);color:#6B4A3E}
+.chip.warn{background:#FBEDEA;border-color:#F3CFC4;color:#A94E46}
+.chip.good{background:var(--rose-soft);border-color:#F6CFC6;color:var(--rose2)}
+
+/* 辅人格 */
+.sec-card{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px dashed #E4C9BA;
+  border-radius:var(--r-lg);padding:20px 22px;margin-bottom:22px}
+.sec-icon{flex:none;width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:#fff}
+.sec-body{flex:1}
+.sec-body h4{font-size:16px;font-weight:900;margin-bottom:2px}
+.sec-body .sec-tag{font-size:12px;color:var(--ink2);margin-bottom:8px}
+.sec-body p{font-size:13.5px;color:#5F463D;line-height:1.85}
+
+/* 六大维度 */
+.six-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.six-cell{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:18px 18px 16px;position:relative;overflow:hidden}
+.six-cell .six-no{position:absolute;top:8px;right:14px;font-size:34px;font-weight:900;color:#F6E3D9;line-height:1}
+.six-cell .six-ic{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:11px;margin-bottom:10px}
+.six-cell h5{font-size:14.5px;font-weight:900;margin-bottom:6px}
+.six-cell p{font-size:13px;color:#6B4A3E;line-height:1.85}
+
+/* 配对公式 */
+.formula-note{display:flex;gap:10px;align-items:flex-start;background:var(--bg2);border:1px solid var(--line);
+  border-radius:var(--r-md);padding:12px 14px;font-size:12.5px;color:#6B4A3E;margin-bottom:18px;line-height:1.8}
+.formula-note svg{flex:none;margin-top:2px}
+.match-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.match-card{background:#fff;border:1.5px solid var(--line);border-radius:var(--r-md);padding:18px 18px 16px;transition:transform .2s ease, box-shadow .2s ease}
+.match-card.best{border-color:var(--rose);background:linear-gradient(160deg,#FFFDFB,var(--rose-soft));box-shadow:var(--shadow-sm)}
+.match-card.best::before{content:"最适配";position:absolute;top:-9px;right:14px;background:var(--rose);color:#fff;
+  font-size:11px;font-weight:700;letter-spacing:.1em;padding:3px 10px;border-radius:999px}
+.match-card{position:relative}
+.match-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.match-ic{flex:none;width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff}
+.match-name{font-weight:900;font-size:14.5px;line-height:1.4}
+.match-pct{margin:8px 0 10px}
+.match-pct .big{font-size:30px;font-weight:900;font-variant-numeric:tabular-nums}
+.match-pct small{font-size:12px;color:var(--ink2)}
+.match-cps{font-size:13px;color:#6B4A3E;line-height:1.75}
+
+/* 总结 */
+.summary-card{background:linear-gradient(160deg,var(--rose2),#C94B52);color:#FFF6F1;border-radius:28px;
+  padding:36px 28px;text-align:center;box-shadow:0 18px 44px rgba(201,75,82,.35);margin-bottom:26px;position:relative;overflow:hidden}
+.summary-card::before{content:"";position:absolute;top:-60px;left:-50px;width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.18),transparent 70%)}
+.summary-card h3{font-size:22px;font-weight:900;margin-bottom:14px;position:relative}
+.summary-card p{font-size:14px;line-height:2.05;color:rgba(255,246,241,.94);position:relative}
+.result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* ===== Toast ===== */
+.toast{position:fixed;left:50%;bottom:34px;transform:translate(-50%,20px);background:#4A322B;color:#FFF6F1;
+  font-size:13.5px;padding:12px 22px;border-radius:999px;opacity:0;pointer-events:none;transition:all .3s ease;
+  z-index:99;box-shadow:0 10px 30px rgba(0,0,0,.25);max-width:86vw;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ===== 响应式 ===== */
+@media (max-width:560px){
+  .dim-strip{grid-template-columns:repeat(2,1fr)}
+  .score-grid{grid-template-columns:repeat(2,1fr)}
+  .six-grid{grid-template-columns:1fr}
+  .match-grid{grid-template-columns:1fr}
+  .quiz-shell{padding:14px 14px max(10px,env(safe-area-inset-bottom))}
+  .quiz-top{margin-bottom:12px}
+  .quiz-sub{font-size:12px}
+  .dim-legend{gap:8px}
+  .dim-legend span{font-size:12px}
+  .quiz-card{padding:18px 16px 16px;border-radius:20px;margin-bottom:10px}
+  .q-meta{margin-bottom:10px}
+  .q-no{font-size:12px}
+  .q-no .num{width:26px;height:26px;border-radius:8px;font-size:13px}
+  .q-title{font-size:17.5px;line-height:1.55;margin-bottom:14px}
+  .opts{gap:9px}
+  .opt{gap:10px;padding:11px 12px;border-radius:14px;line-height:1.6}
+  .opt .badge{width:28px;height:28px;font-size:13px}
+  .opt .txt{font-size:14px}
+  .quiz-nav .btn{padding:13px 10px;font-size:15px}
+  .q-hint{font-size:12px;min-height:18px;margin-top:6px}
+  .hero-card{padding:32px 20px 28px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+
+<!-- ===== 视图：首页 ===== -->
+<section class="view home" id="view-home">
+  <div class="home-bg" aria-hidden="true">
+    <div class="blob b1"></div><div class="blob b2"></div>
+    <svg class="heart" width="46" height="46" viewBox="0 0 24 24" style="top:12%;left:8%"><path fill="#E8625F" d="M12 21s-7.2-4.4-7.2-9.4c0-2.3 1.8-4 4-4 1.6 0 2.6.8 3.2 1.8.6-1 1.6-1.8 3.2-1.8 2.2 0 4 1.7 4 4 0 5-7.2 9.4-7.2 9.4z"/></svg>
+    <svg class="heart" width="30" height="30" viewBox="0 0 24 24" style="top:64%;left:14%"><path fill="#E29A3C" d="M12 21s-7.2-4.4-7.2-9.4c0-2.3 1.8-4 4-4 1.6 0 2.6.8 3.2 1.8.6-1 1.6-1.8 3.2-1.8 2.2 0 4 1.7 4 4 0 5-7.2 9.4-7.2 9.4z"/></svg>
+    <svg class="heart" width="38" height="38" viewBox="0 0 24 24" style="top:30%;right:9%"><path fill="#D4576E" d="M12 21s-7.2-4.4-7.2-9.4c0-2.3 1.8-4 4-4 1.6 0 2.6.8 3.2 1.8.6-1 1.6-1.8 3.2-1.8 2.2 0 4 1.7 4 4 0 5-7.2 9.4-7.2 9.4z"/></svg>
+    <svg class="heart" width="26" height="26" viewBox="0 0 24 24" style="bottom:16%;right:16%"><path fill="#B0764E" d="M12 21s-7.2-4.4-7.2-9.4c0-2.3 1.8-4 4-4 1.6 0 2.6.8 3.2 1.8.6-1 1.6-1.8 3.2-1.8 2.2 0 4 1.7 4 4 0 5-7.2 9.4-7.2 9.4z"/></svg>
+  </div>
+  <div class="home-inner">
+    <div class="home-logo">
+      <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21s-7.2-4.4-7.2-9.4c0-2.3 1.8-4 4-4 1.6 0 2.6.8 3.2 1.8.6-1 1.6-1.8 3.2-1.8 2.2 0 4 1.7 4 4 0 5-7.2 9.4-7.2 9.4z"/></svg>
+      CP上头值 · 25题
+    </div>
+    <h1>你磕的CP，<br>暴露了你<em>理想中的爱情</em></h1>
+    <p class="lead">你嗑的每一对CP、上头的每一种人设——病娇偏执、年上护短、双强宿命、xql拉扯、欢喜冤家、烟火长情，都不是偶然。<b>你的CP审美，就是你潜意识里不敢直白承认的理想爱情。</b></p>
+    <div class="dim-strip">
+      <div class="dim-chip"><div class="dot" style="background:var(--A)"></div><div class="dn">偏执治愈</div><div class="dd">病娇 / 年上偏爱</div></div>
+      <div class="dim-chip"><div class="dot" style="background:var(--B)"></div><div class="dn">双强宿命</div><div class="dd">强强 / 对手爱人</div></div>
+      <div class="dim-chip"><div class="dot" style="background:var(--C)"></div><div class="dn">松弛鲜活</div><div class="dd">xql / 欢喜冤家</div></div>
+      <div class="dim-chip"><div class="dot" style="background:var(--D)"></div><div class="dn">烟火长情</div><div class="dd">细水长流安稳</div></div>
+    </div>
+    <div class="home-cta">
+      <button class="btn btn-primary" id="btn-start" style="font-size:18px;padding:17px 46px">
+        开始测试
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13 5l7 7-7 7-1.5-1.5L16 13H4v-2h12l-4.5-4.5z"/></svg>
+      </button>
+      <p class="home-note">凭第一直觉作答 · 共 25 题 · 约 3 分钟</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 视图：答题 ===== -->
+<section class="view quiz" id="view-quiz">
+  <div class="quiz-shell">
+    <div class="quiz-top">
+      <div class="quiz-topbar">
+        <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:4%"></div></div>
+        <div class="q-counter"><b id="q-current">1</b> / <span id="q-total">25</span></div>
+      </div>
+      <div class="quiz-sub">
+        <div class="dim-legend">
+          <span><i style="background:var(--A)"></i>偏执治愈</span>
+          <span><i style="background:var(--B)"></i>双强宿命</span>
+          <span><i style="background:var(--C)"></i>松弛鲜活</span>
+          <span><i style="background:var(--D)"></i>烟火长情</span>
+        </div>
+        <span id="quiz-done-tip">0 / 25 已作答</span>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="quiz-card">
+      <div class="q-meta">
+        <span class="q-no"><span class="num" id="q-num">1</span>第 <span id="q-num2">1</span> 题</span>
+        <span class="q-tag" id="q-tag">选你所爱</span>
+      </div>
+      <h2 class="q-title" id="q-title"></h2>
+      <div class="opts" id="opts"></div>
+    </div>
+
+    <div class="quiz-nav">
+      <button class="btn btn-ghost" id="btn-prev">
+        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11 5l-7 7 7 7 1.5-1.5L8 13h12v-2H8l4.5-4.5z"/></svg>
+        上一题
+      </button>
+      <button class="btn btn-primary disabled" id="btn-next" disabled>下一题</button>
+    </div>
+    <p class="q-hint" id="q-hint">请先选择一个选项，再进入下一题</p>
+  </div>
+</section>
+
+<!-- ===== 视图：结果 ===== -->
+<section class="view result" id="view-result">
+  <div class="result-shell">
+
+    <div class="hero-card">
+      <div class="hero-inner">
+        <div class="hero-label">你的核心恋爱人格判定</div>
+        <div class="hero-type" id="res-hero-type"></div>
+        <p class="hero-sub" id="res-hero-sub"></p>
+        <div class="hero-mix" id="res-hero-mix"></div>
+        <div class="hero-actions">
+          <button class="btn btn-primary small" id="btn-share-top">分享我的结果</button>
+          <button class="btn btn-ghost small" id="btn-retest-top">重新测试</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 测试得分 -->
+    <div class="card">
+      <div class="card-head">
+        <div class="ci" style="background:var(--rose-soft);color:var(--rose2)">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+        </div>
+        <div><h3>测试得分</h3><div class="en">SCORE · 25 QUESTIONS</div></div>
+      </div>
+      <div class="score-grid" id="res-score-grid"></div>
+      <p style="font-size:12.5px;color:var(--ink2);margin-top:14px;text-align:center">四个维度各自独立计分，可同时多项高上头 —— 代表你能同时被多种爱情审美打动。</p>
+    </div>
+
+    <!-- 维度图 -->
+    <div class="card">
+      <div class="card-head">
+        <div class="ci" style="background:var(--C-soft);color:#A86F1E">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.6 6.6L21 11l-6.4 2.4L12 20l-2.6-6.6L3 11l6.4-2.4z"/></svg>
+        </div>
+        <div><h3>四维上头值维度图</h3><div class="en">RADAR · 上头值占比</div></div>
+      </div>
+      <div class="radar-box" id="radar-box"></div>
+      <div class="bar-list" id="bar-list"></div>
+      <div class="bar-ticks"><span>0</span><span>25</span><span>50</span><span>75</span><span>100%</span></div>
+    </div>
+
+    <!-- 四维分项解读 -->
+    <div class="card">
+      <div class="card-head">
+        <div class="ci" style="background:var(--B-soft);color:var(--B)">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M4 17l6-6-6-6V3h16v2H7.8L14 11l-6.2 6H20v2H4z"/></svg>
+        </div>
+        <div><h3>四维分项独立上头值解读</h3><div class="en">DIMENSION INSIGHT</div></div>
+      </div>
+      <div class="tier-cards" id="tier-cards"></div>
+    </div>
+
+    <!-- 核心人格 -->
+    <div class="card">
+      <div class="card-head">
+        <div class="ci" style="background:var(--rose-soft);color:var(--rose2)">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21s-7.2-4.4-7.2-9.4c0-2.3 1.8-4 4-4 1.6 0 2.6.8 3.2 1.8.6-1 1.6-1.8 3.2-1.8 2.2 0 4 1.7 4 4 0 5-7.2 9.4-7.2 9.4z"/></svg>
+        </div>
+        <div><h3>主恋爱人格 · 深度画像</h3><div class="en">MAIN PERSONALITY</div></div>
+      </div>
+      <div id="res-profile"></div>
+    </div>
+
+    <!-- 辅人格 -->
+    <div id="res-secondary"></div>
+
+    <!-- 六大维度 -->
+    <div class="card">
+      <div class="card-head">
+        <div class="ci" style="background:var(--D-soft);color:var(--D)">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C7 2 3 6 3 11c0 4.5 3.4 8.4 7.8 9.6L12 22l1.2-1.4C17.6 19.4 21 15.5 21 11c0-5-4-9-9-9zm0 16.5C8.5 17 5.5 13.8 5.5 11c0-3 2.2-5.2 5-5.2 1.7 0 3.2.9 4 2.2.8-1.3 2.3-2.2 4-2.2 2.8 0 5 2.2 5 5.2 0 2.8-3 6-6.5 7.5z"/></svg>
+        </div>
+        <div><h3>六大维度满分深度总解析</h3><div class="en">FINAL REVIEW · 终极复盘</div></div>
+      </div>
+      <div class="six-grid" id="six-grid"></div>
+    </div>
+
+    <!-- 配对公式 -->
+    <div class="card">
+      <div class="card-head">
+        <div class="ci" style="background:var(--B-soft);color:var(--B)">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M2 15l7-7 4 4 7-8 2 2-9 10-4-4-5 5H2v-2zm0 3h3v2H2v-2zm18-2h2v4h-2v-4z"/></svg>
+        </div>
+        <div><h3>爱情配对公式 · 匹配度</h3><div class="en">LOVE MATCH</div></div>
+      </div>
+      <div class="formula-note">
+        <svg width="16" height="16" viewBox="0 0 24 24" style="color:var(--rose2)"><path fill="currentColor" d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+        <span>匹配度口径：以你的主人格得分为基底，叠加目标维度的上头值，共同折算双方的同频程度。<b>同频的恋人人格，最懂得你的磕糖逻辑。</b></span>
+      </div>
+      <div class="match-grid" id="match-grid"></div>
+    </div>
+
+    <!-- 最终总结 -->
+    <div class="summary-card">
+      <h3>你的CP审美，就是你对一生爱意的最高期待</h3>
+      <p>你嗑的糖、你上头的人设、你避雷的雷点，完整拼凑出了你专属的理想爱情全貌。看懂自己的CP偏好，就是看懂自己想要什么样的一生爱意。</p>
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="btn-share">
+        分享我的结果
+        <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18 16c-.8 0-1.6.3-2.1.8L8.9 13c.1-.3.1-.7.1-1s0-.7-.1-1l7-3.8c.6.5 1.4.8 2.2.8a3.2 3.2 0 100-6.4c-1.8 0-3.2 1.4-3.2 3.2 0 .3.1.7.1 1l-7 3.8c-.6-.5-1.4-.8-2.2-.8a3.2 3.2 0 100 6.4c.8 0 1.6-.3 2.2-.8l7 3.8c-.1.3-.1.6-.1 1 0 1.7 1.4 3.1 3.1 3.1a3.2 3.2 0 100-6.4z"/></svg>
+      </button>
+      <button class="btn btn-ghost" id="btn-retest">
+        <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 5V1L7 6l5 5V7a5 5 0 11-5 5H5a7 7 0 107-7z"/></svg>
+        重新测试
+      </button>
+    </div>
+    <p style="text-align:center;font-size:12px;color:var(--ink2);margin-top:18px">以上报告基于你的 25 题作答实时生成，仅供娱乐参考 —— 愿你遇到真正同频的人。</p>
+  </div>
+</section>
+
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ===== 题目数据（参考文档录入） ===== */
+var QUESTIONS = [
+  {q:'刷CP剪辑，哪类糖最容易让你疯狂上头？',opts:['专属双标，独一份偏爱，别人全是外人，占有感拉满','强强并肩，互为靠山，双向打怪升级，宿命感十足','xql式互怼拉扯，吵吵闹闹，日常氛围感拉满','细水长流陪伴糖，平淡安稳，无狗血剧情，长久治愈']},
+  {q:'你最吃哪种CP感情升温套路？',opts:['暗戳戳暗恋，极致执念，带点病娇感的专属默默守护','对手变挚爱，互相认可实力，旗鼓相当中慢慢动心','欢喜冤家极限拉扯，嘴硬心软，越怼越甜','日久生情慢热模式，慢慢磨合，习惯彼此的专属存在']},
+  {q:'CP闹矛盾出现BE预警，你最能接受的和解方式是？',opts:['不冷战不拉扯，主动低头哄人，优先兜底对方情绪','理性复盘矛盾，双向反思，一起解决问题、磨合适配','吵完即时翻篇不记仇，转头继续打闹，无内耗相处','无需多言争辩，用长期陪伴慢慢修复所有隔阂']},
+  {q:'追剧看文挑CP，你最偏爱哪组人设配置？',opts:['偏执病娇守护×软糯被宠，极致护短，非你不可','双强天花板，势均力敌，独立清醒，互不依附','年上稳沉×元气年下，反差萌xql，适配度拉满','平凡烟火CP，无光环滤镜，主打踏实相守过日子']},
+  {q:'嗑CP时，你最看重的核心特质是？',opts:['感情绝对唯一，拒绝中央空调，偏爱只专属一人','彼此尊重成全，保持独立人格，双向成长不捆绑','相处松弛自由，不用端人设，开心舒服永远第一','忠诚长情坚定，历经波折不放手，拒绝快餐式BE']},
+  {q:'哪种名场面，会成为你的CP封神名场面？',opts:['偏执眼神杀、下意识排他护短，占有欲细节拉满','低谷双向托底，危难时刻并肩扛事，互为底气','嘴欠互撩反差，嘴上嫌弃、行动极致宠溺','深夜走心谈心，长期稳定的情绪陪伴与包容']},
+  {q:'CP被全网非议、遭遇巨大外界阻力，你最吃的应对方式？',opts:['对外统一战线，极致护短，隔绝所有流言蜚语','联手破局，共同对抗困境，一起跨越所有阻碍','无视路人杂音，自顾自甜蜜，专注二人小世界','不急于争辩，默默坚守，用时间证明真心']},
+  {q:'你最吃哪种CP告白定情桥段？',opts:['强势直球告白，带着偏执执念，认定即是终身','灵魂共鸣告白，欣赏三观与能力，双向笃定','俏皮试探告白，半撩半真，氛围感温柔心动','含蓄润物告白，爱意藏日常行动，低调长情']},
+  {q:'哪种CP设定会让你瞬间下头、直接避雷？',opts:['单向舔狗式付出，爱意不对等，敷衍式营业','依附型恋爱，一方丧失自我，全程捆绑依附对方','假面营业CP，刻意装甜演戏，相处紧绷不真实','快餐式热恋，热度褪去就BE，毫无忠诚度']},
+  {q:'你理想中的xql日常氛围是？',opts:['黏糊高甜偏执，满眼皆是对方，专属感拉满','各自发光立业，需要时互为后盾，清醒共生','热闹鲜活互怼，玩梗不断，相处轻松无压力','安静治愈平淡，无需刻意找话题，相守即心安']},
+  {q:'CP被迫分离、久别重逢，你最吃哪种剧情？',opts:['分离不改执念，重逢依旧满眼偏爱，初心未改','异地各自沉淀成长，重逢顶峰相见，双向蜕变','久别零生疏，秒回打闹日常，xql氛围感复刻','漫长坚守等待，熬过所有分别，安稳相守余生']},
+  {q:'CP一方事业高光登顶，你最认可另一方的反应？',opts:['极致护短骄傲，全网安利，偏爱毫无保留','由衷欣赏认可，同步进阶，并肩奔赴更高处','嘴上调侃打趣，心底真诚祝福，松弛庆祝','默默退守幕后，安稳陪伴，做最坚实后盾']},
+  {q:'反差人设CP中，你最上头的组合是？',opts:['偏执内敛病娇×温柔软糯，专属守护极致偏爱','理性强者×感性温柔，互补短板，双向成就','沉稳年上×元气年下，冷热对冲，甜度翻倍','敏感内耗×豁达包容，温柔治愈，抚平不安']},
+  {q:'嗑双向奔赴，你最吃哪种核心模式？',opts:['情绪双向兜底，接住彼此脆弱，治愈所有内耗','事业双向赋能，互相督促成长，共同进阶变强','快乐双向共享，解锁新鲜趣事，制造专属梗点','风雨双向共担，顺逆不离，长久不离不弃']},
+  {q:'以下哪种CP模式，你完全嗑不动、极度排斥？',opts:['单恋失衡，一方倾尽所有，一方冷漠敷衍','恋爱脑依附，丢掉自我，人生全捆绑对方','虚假营业，刻意甜宠，相处压抑毫无松弛感','三分钟热度，一时上头，遇挫立刻抽身BE']},
+  {q:'CP专属默契，哪一种最戳你的心动点？',opts:['情绪神同步，一个眼神读懂所有心思与委屈','三观高度同频，人生抉择、处事逻辑完全契合','笑点梗点互通，秒接对方玩笑，相处极度合拍','生活习惯契合，无需磨合，自然适配彼此节奏']},
+  {q:'CP感情出现小瑕疵、小矛盾，你最认可的处理方式？',opts:['全盘接纳不完美，温柔包容，用心磨合差异','正视问题不逃避，双向调整，优化相处模式','忽略细碎bug，主打开心嗑糖，不纠结内耗','日久磨合包容，用长久陪伴消解所有不足']},
+  {q:'你最偏爱CP感情线的推进节奏？',opts:['一眼沦陷极速上头，直球强势，执念式奔赴','循序渐进试探，三观适配后动心，稳步深耕','顺其自然随性发展，不刻意、不勉强、不施压','慢热沉淀日久生情，细水长流，层层积累爱意']},
+  {q:'最戳你的CP细节糖是？',opts:['极致双标反差，对外清冷疏离，只对你温柔偏执','尊重边界底线，支持彼此理想，不捆绑不控制','花式制造惊喜，记住所有喜好，日常趣味满满','永远有空陪伴，再忙也留专属时间，绝不缺席']},
+  {q:'你最向往的CP感情结局是？',opts:['终身热恋，执念不改，岁岁年年专属偏爱','顶峰并肩，各自璀璨，互为知己终身战友','自由欢喜，无拘无束，一辈子鲜活轻松','烟火寻常，安稳相守，平淡余生皆是温柔']},
+  {q:'看CP剧情，你最容易共情的感情状态是？',opts:['满心虔诚执念，把对方视作独一无二的救赎','势均力敌的笃定，独立清醒，灵魂高度契合','无忧无虑的欢喜，鲜活自由，无感情内耗','踏实安稳的笃定，长久陪伴，无惧离别波折']},
+  {q:'你心中CP感情绝对不能触碰的底线是？',opts:['专一纯粹，拒绝养鱼、暧昧、分心博爱','平等尊重，拒绝控制、捆绑、牺牲自我','真诚坦荡，拒绝演戏、营业、虚假相处','坚定坚守，拒绝逃避、轻言放弃、半途而废']},
+  {q:'嗑双向救赎CP，你最上头的设定是？',opts:['偏执式救赎，互为唯一港湾，治愈彼此所有伤痕','成长式救赎，拉扯彼此走出低谷，双向蜕变变强','快乐式救赎，打破沉闷生活，彼此治愈内耗','陪伴式救赎，熬过人生低谷，岁月沉淀真心']},
+  {q:'刷CP物料，你会无限循环的片段是？',opts:['双标护短、偏执偏爱细节糖混剪','双强并肩、互相托底的高光名场面','xql互怼打闹、搞笑松弛日常cut','平淡治愈、烟火相守的生活化片段']},
+  {q:'你心中理想爱情的终极内核是？',opts:['非你不可的执念，独家偏爱，双向治愈','旗鼓相当的契合，彼此成就，双向共生','松弛自由的欢喜，真实随性，双向奔赴快乐','细水长流的坚守，安稳踏实，双向相守']}
+];
+
+/* ===== 四维定义 ===== */
+var DIMS = [
+  {key:'A', name:'偏执治愈', sub:'病娇 / 年上偏爱', color:'#D4576E', soft:'#FBE7EC',
+   ic:'<path fill="currentColor" d="M12 21s-7.2-4.4-7.2-9.4c0-2.3 1.8-4 4-4 1.6 0 2.6.8 3.2 1.8.6-1 1.6-1.8 3.2-1.8 2.2 0 4 1.7 4 4 0 5-7.2 9.4-7.2 9.4z"/>'},
+  {key:'B', name:'双强宿命', sub:'强强 / 对手爱人', color:'#5E7FB0', soft:'#E9EFF8',
+   ic:'<path fill="currentColor" d="M12 2l8 18H4L12 2zm0 5l-4.2 9.5h8.4L12 7z"/>'},
+  {key:'C', name:'松弛鲜活', sub:'xql / 欢喜冤家', color:'#E29A3C', soft:'#FBF1E0',
+   ic:'<path fill="currentColor" d="M12 2l2.6 6.6L21 11l-6.4 2.4L12 20l-2.6-6.6L3 11l6.4-2.4z"/>'},
+  {key:'D', name:'烟火长情', sub:'细水长流安稳', color:'#B0764E', soft:'#F5EADF',
+   ic:'<path fill="currentColor" d="M12 3L2 12h3v8h6v-5h2v5h6v-8h3L12 3z"/>'}
+];
+
+/* ===== 四维分项独立上头值解读（参考文档） ===== */
+var TIERS = {
+  A:{high:'你很容易被独一份的偏爱、护短、救赎感的人设狠狠戳中。内心极度渴求被坚定选择，对专一性要求很高，很吃双标、执念感的感情故事。情感敏感度高，潜意识渴望强烈的安全感证明。',
+     mid:'欣赏这类极致偏爱CP，但不会当成爱情刚需。偶尔会被浓烈的宿命感打动，但理智分得清文学设定和现实边界，不会强行把偏执标准套到现实伴侣身上。',
+     low:'偏执、强占有欲的感情会让你感到压抑。不喜欢沉重拉扯、需要反复证明爱意的关系，偏爱留有个人空间的感情模式。'},
+  B:{high:'独立底色很强。爱情对你而言是并肩作战，不是单方面庇护。欣赏能力、格局、思想共鸣，反感依附型恋爱。会期待伴侣可以和你一起成长，共同扛住困境。',
+     mid:'认可强强爱情的魅力，但不是硬性择偶标准。欣赏优秀的人，也可以接受关系存在强弱落差，只要互相尊重，多种感情模式你都可以接纳。',
+     low:'不太看重双方实力对等。比起事业、能力上的旗鼓相当，你优先在意情绪感受和日常相处，对共同成长没有很强执念。'},
+  C:{high:'感情里最核心需求就是自在开心。讨厌压抑、猜来猜去、沉重内耗的关系。向往不用伪装，可以互相打趣的玩伴式亲密关系，非常看重笑点同频、相处无压力。',
+     mid:'轻松有趣的日常很加分，但不是唯一标准。喜欢欢乐日常，也可以接纳感情里严肃、有矛盾的时刻，不会单纯为了快乐回避问题。',
+     low:'单纯打闹搞笑的恋爱很难打动你。比起表面玩乐，你更看重感情内核、承诺、安全感，深度联结比有趣更重要。'},
+  D:{high:'你的爱情观看重长久与责任。比起一瞬间轰轰烈烈的心动，更相信时间沉淀出来的真心。重视忠诚、不离不弃，愿意磨合包容，不喜欢快餐式短暂恋爱。',
+     mid:'认可长久陪伴的珍贵，但也能欣赏热烈短暂的心动。既能接纳平淡日常，也期待感情保留心动新鲜感，可以接受关系存在变数。',
+     low:'平淡无波澜的长久关系很难打动你。更容易被戏剧感、强冲突的故事吸引，对"一辈子相守"没有强烈执念。'}
+};
+
+/* ===== 四类人格画像（参考文档） ===== */
+var PROFILES = {
+  A:{name:'偏执治愈恋人', tag:'病娇偏爱 · 年上护短 · 非你不可',
+    image:'你是典型的深情敏感型恋爱人格。外表看似冷静克制，内心极度渴望被坚定选择。你嗑CP极其挑剔，只吃"独一份、双标、排他、护短"的糖，对暧昧、养鱼、博爱温柔零容忍。你骨子里带有轻微的执念型恋爱观：不喜欢随便的喜欢，要么不开始，要么就是唯一。你容易被带点占有欲、强势、笃定的感情打动，因为这能填补你内心深处的不安全感。你在感情里最珍贵的特质是：专一、真诚、情绪共情力极强，你总能第一时间捕捉对方的情绪变化，愿意为爱兜底、为爱包容。',
+    origin:'你沉迷病娇守护、年上强制偏爱、双标细节糖、救赎向CP。因为现实里你很难完全信任别人，所以你极度向往"全世界我都不在乎，我只偏心你"的极致关系。你嗑的不是狗血，是被坚定选择的安全感。',
+    ideal:['对外高冷疏离，只对你双标温柔的年上掌控型','占有欲强、护短、专一、拒绝所有暧昧的偏执型恋人','情绪稳定、会哄人、愿意主动给你安全感的笃定型人格'],
+    cps:['偏执守护×软糯治愈','年上霸总式偏爱','双向救赎CP'],
+    avoid:['中央空调型','暧昧拉扯型','忽冷忽热型','不拒绝桃花的模糊人格'],
+    advice:['不要把"别人的偏爱"当成自我价值的唯一来源，你的珍贵不需要别人证明。','减少过度脑补和情绪内耗，真正爱你的人，不需要你反复试探。','可以期待极致偏爱，但不要容忍控制欲和极端占有，温柔偏执不等于情绪绑架。','适当松弛，感情是滋养，不是自我捆绑。'],
+    core:'要独一份的偏爱与笃定',
+    six:[
+      {t:'爱情内核',d:'独一无二的偏爱与救赎感。情感敏感度高，把"被坚定选择"当作感情的最高证明。'},
+      {t:'相处模式',d:'黏糊高甜、满眼皆是对方，情绪互相兜底，最怕敷衍与冷淡的相处。'},
+      {t:'隐形情感缺口',d:'安全感。内心渴望被无条件偏袒，需要强烈而笃定的选择来治愈不安。'},
+      {t:'绝对底线',d:'专一纯粹，拒绝养鱼、暧昧、分心博爱，零容忍中央空调式温柔。'},
+      {t:'恋爱节奏',d:'一眼沦陷的直球奔赴，带执念感的强势升温，认定即是终身。'},
+      {t:'终极爱情归宿',d:'岁岁年年的专属偏爱，非你不可的双向治愈，执念不改。'}
+    ]},
+  B:{name:'双强共赢恋人', tag:'强强宿命 · 并肩登顶 · 灵魂同频',
+    image:'你是稀缺的清醒高阶恋爱人格。你从来不嗑无脑甜宠、无脑霸总，你只嗑势均力敌、并肩同行。你潜意识里非常独立、要强、有自我追求。你认为爱情是"锦上添花"，不是"救命稻草"。你最欣赏的亲密关系是：两个人都是独立的个体，在一起是战友，分开是各自璀璨。你极度讨厌恋爱脑、依附型、拖后腿的感情。你对伴侣的要求从来不是"对你好"，而是三观同频、格局匹配、能一起成长。',
+    origin:'你上头双强天花板、对手变爱人、宿命CP、事业并肩向。因为你本身就是向上走的人，你潜意识拒绝低端关系，你向往的是两个人互相托底、互相成就、跨越阶层、共同升级的高级爱情。',
+    ideal:['认知在线、格局大、情绪稳定的成熟强者','有事业心、有底线、尊重边界，不捆绑控制','可以和你思想博弈、共同进步、遇事一起解决的伙伴型恋人'],
+    cps:['双强对等CP','宿敌变挚爱','战友型恋人','顶峰相见CP'],
+    avoid:['摆烂佛系','三观不合','控制欲强','恋爱脑黏人','拖累你成长的人'],
+    advice:['不必过度理智，爱情需要偶尔感性，不用时刻紧绷"成长压力"。','允许对方有不完美，不要用"完美双强"标准苛责伴侣。','学会表达爱意，你的温柔藏在行动里，记得偶尔直白流露。','不要因为追求成长，忽略了恋爱本身的幸福感。'],
+    core:'要势均力敌的并肩与成长',
+    six:[
+      {t:'爱情内核',d:'势均力敌、彼此成就。爱情是锦上添花，不是救命稻草。'},
+      {t:'相处模式',d:'各自发光立业，需要时互为后盾，清醒共生、互不依附。'},
+      {t:'隐形情感缺口',d:'精神同频。寻找认知、格局、三观都接得住自己的对手与战友。'},
+      {t:'绝对底线',d:'平等尊重，拒绝控制、捆绑、恋爱脑依附与拖累成长的关系。'},
+      {t:'恋爱节奏',d:'循序渐进试探，三观适配后动心，稳步深耕不冒进。'},
+      {t:'终极爱情归宿',d:'顶峰并肩、互为知己的终身战友，双向蜕变、各自璀璨。'}
+    ]},
+  C:{name:'松弛欢喜恋人', tag:'xql日常 · 欢喜冤家 · 自由鲜活',
+    image:'你是人群中少见的无内耗快乐恋爱人格。性格通透、随性、乐观，极其讨厌沉重、拉扯、狗血、压抑的感情模式。你嗑CP从来不看人设多牛、剧情多虐，你只看相处氛围。对你来说，恋爱最重要的核心是：舒服、真实、有话聊、不装不累。你内心非常向往自由，不喜欢被捆绑、被掌控、被道德绑架。你在感情里最迷人的地方是：真诚、松弛、自带氛围感、治愈力极强。',
+    origin:'你疯狂嗑xql日常、欢喜冤家、年上年下反差互怼、轻松甜。因为你骨子里讨厌虚伪营业、讨厌成年人的套路拉扯。你渴望一段不用猜、不用演、自在打闹的纯粹关系。',
+    ideal:['情绪稳定、风趣幽默、能接你所有梗的同频玩伴','不矫情、不内耗、相处坦荡、真实不装的人','愿意陪你体验生活、制造快乐、尊重你自由的松弛型恋人'],
+    cps:['欢喜冤家CP','年上稳×年下疯','日常打闹xql','氛围感甜宠'],
+    avoid:['阴郁内耗','极端敏感','控制欲强','爱冷战','沉重压抑型人格'],
+    advice:['不要只追求"开心"，忽略深度磨合，轻松的感情也需要经营。','遇到问题不要习惯性逃避，适度沟通才能长久。','松弛不等于敷衍，随性也要有底线和原则。','可以快乐至上，但不要害怕深度投入。'],
+    core:'要松弛真实的快乐与自由',
+    six:[
+      {t:'爱情内核',d:'松弛自由的欢喜，真实随性，快乐至上、无内耗。'},
+      {t:'相处模式',d:'热闹鲜活互怼，玩梗不断，相处轻松无压力，不装不累。'},
+      {t:'隐形情感缺口',d:'自由与被理解。讨厌虚伪营业与套路拉扯，渴望纯粹打闹的关系。'},
+      {t:'绝对底线',d:'真诚坦荡，拒绝演戏、营业与虚假相处。'},
+      {t:'恋爱节奏',d:'顺其自然随性发展，不刻意、不勉强、不施压。'},
+      {t:'终极爱情归宿',d:'自由欢喜、无拘无束，一辈子鲜活轻松。'}
+    ]},
+  D:{name:'烟火长情恋人', tag:'细水长流 · 安稳相守 · 从一而终',
+    image:'你是极其难得的长情踏实型人格。比起轰轰烈烈的心动，你更吃细水长流的真心。你不沉迷工业糖精、不痴迷戏剧化人设，你最看重的是：稳定、忠诚、坚守、责任。你内心稳重、包容、共情强，在感情里极度能吃苦、能磨合、能坚持。你对待爱情非常虔诚，一旦认定，就是奔着一辈子去的。你不擅长表达甜言蜜语，但你擅长长久陪伴、默默付出、不离不弃。你的爱情观非常成熟、通透、落地。',
+    origin:'你偏爱烟火日常CP、治愈平淡向、久别重逢坚守型、老夫老妻模式。因为你潜意识知道：所有热烈都会褪色，唯有陪伴与忠诚能抵御岁月漫长。你嗑的不是瞬间心动，是岁月沉淀的笃定。',
+    ideal:['踏实稳重、有担当、情绪成熟、不浮躁的人','专一忠诚、遇事不逃避、愿意和你共渡难关的人','温柔内敛、懂包容、愿意长期经营感情的长情型恋人'],
+    cps:['烟火治愈CP','细水长流相守型','风雨共担现实向CP'],
+    avoid:['浮躁快餐','三分钟热度','逃避责任','爱玩爱浪、不负责任的人'],
+    advice:['不要一味付出隐忍，感情是双向的，你值得被好好对待。','学会主动表达爱意和需求，不要让对方猜你的情绪。','不要为了"长久"妥协底线，不合适的坚持没有意义。','平淡之余可以适当制造新鲜感，让感情更有温度。'],
+    core:'要细水长流的安稳与相守',
+    six:[
+      {t:'爱情内核',d:'细水长流的坚守，安稳踏实、从一而终。'},
+      {t:'相处模式',d:'安静治愈平淡，无需刻意找话题，相守即心安。'},
+      {t:'隐形情感缺口',d:'稳定与忠诚。相信时间沉淀的真心，拒绝快餐式BE。'},
+      {t:'绝对底线',d:'坚定坚守，拒绝逃避、轻言放弃与半途而废。'},
+      {t:'恋爱节奏',d:'慢热沉淀、日久生情，层层积累爱意不冒进。'},
+      {t:'终极爱情归宿',d:'烟火寻常、安稳相守，平淡余生皆是温柔。'}
+    ]}
+};
+
+/* ===== 状态 ===== */
+var answers = new Array(QUESTIONS.length).fill(null);
+var cur = 0;
+var autoTimer = null;
+
+/* ===== 视图路由 ===== */
+var views = {home:document.getElementById('view-home'), quiz:document.getElementById('view-quiz'), result:document.getElementById('view-result')};
+function showView(name){
+  for(var k in views){ views[k].classList.toggle('active', k===name); }
+  window.scrollTo(0,0);
+  if(name==='quiz'){ renderQuestion(); }
+  if(name==='result'){ renderResult(); }
+}
+function route(){
+  var h = (location.hash||'#home').replace('#','');
+  if(h==='quiz'||h==='result'||h==='home'){ showView(h); } else { showView('home'); }
+}
+window.addEventListener('hashchange', route);
+
+/* ===== 答题 ===== */
+function answeredCount(){ return answers.filter(function(a){return a!==null;}).length; }
+
+function renderQuestion(){
+  var qi = QUESTIONS[cur];
+  document.getElementById('q-current').textContent = cur+1;
+  document.getElementById('q-num').textContent = cur+1;
+  document.getElementById('q-num2').textContent = cur+1;
+  document.getElementById('q-title').textContent = qi.q;
+  document.getElementById('progress-fill').style.width = ((cur+1)/QUESTIONS.length*100).toFixed(1) + '%';
+  document.getElementById('quiz-done-tip').textContent = answeredCount() + ' / ' + QUESTIONS.length + ' 已作答';
+  var tag = document.getElementById('q-tag');
+  tag.textContent = cur===0 ? '凭第一直觉' : (cur===QUESTIONS.length-1 ? '最后一题' : '凭第一直觉');
+  var optsBox = document.getElementById('opts');
+  optsBox.innerHTML = '';
+  var letters = ['A','B','C','D'];
+  for(var i=0;i<4;i++){
+    (function(idx){
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt' + (answers[cur]===idx ? ' selected' : '');
+      btn.setAttribute('role','radio');
+      btn.setAttribute('aria-checked', answers[cur]===idx ? 'true' : 'false');
+      btn.innerHTML = '<span class="badge">'+letters[idx]+'</span><span class="txt">'+qi.opts[idx]+'</span>';
+      btn.addEventListener('click', function(){ selectOption(idx); });
+      optsBox.appendChild(btn);
+    })(i);
+  }
+  document.getElementById('btn-prev').style.visibility = cur===0 ? 'hidden' : 'visible';
+  var next = document.getElementById('btn-next');
+  var isLast = cur===QUESTIONS.length-1;
+  next.innerHTML = isLast ? '查看结果' : '下一题';
+  var has = answers[cur]!==null;
+  next.classList.toggle('disabled', !has);
+  next.disabled = !has;
+  document.getElementById('q-hint').textContent = has ? '' : '请先选择一个选项，再进入下一题';
+  var card = document.getElementById('quiz-card');
+  card.classList.remove('q-anim'); void card.offsetWidth; card.classList.add('q-anim');
+}
+
+function selectOption(i){
+  if(autoTimer){ clearTimeout(autoTimer); autoTimer = null; }
+  answers[cur] = i;
+  var opts = document.querySelectorAll('#opts .opt');
+  for(var k=0;k<opts.length;k++){
+    opts[k].classList.toggle('selected', k===i);
+    opts[k].setAttribute('aria-checked', k===i ? 'true':'false');
+  }
+  var next = document.getElementById('btn-next');
+  next.classList.remove('disabled'); next.disabled = false;
+  document.getElementById('quiz-done-tip').textContent = answeredCount() + ' / ' + QUESTIONS.length + ' 已作答';
+  if(cur===QUESTIONS.length-1){
+    document.getElementById('q-hint').textContent = '完成！正在生成你的专属报告…';
+    autoTimer = setTimeout(function(){ location.hash = '#result'; }, 700);
+  } else {
+    document.getElementById('q-hint').textContent = '';
+  }
+}
+
+document.getElementById('btn-start').addEventListener('click', function(){
+  answers = new Array(QUESTIONS.length).fill(null); cur = 0;
+  location.hash = '#quiz';
+});
+document.getElementById('btn-prev').addEventListener('click', function(){
+  if(autoTimer){ clearTimeout(autoTimer); autoTimer = null; }
+  if(cur>0){ cur--; renderQuestion(); }
+});
+document.getElementById('btn-next').addEventListener('click', function(){
+  if(answers[cur]===null){ return; }
+  if(autoTimer){ clearTimeout(autoTimer); autoTimer = null; }
+  if(cur<QUESTIONS.length-1){ cur++; renderQuestion(); }
+  else { location.hash = '#result'; }
+});
+
+/* ===== 计分 ===== */
+function getScores(){
+  var s = [0,0,0,0];
+  for(var i=0;i<answers.length;i++){ if(answers[i]!==null){ s[answers[i]]++; } }
+  return s;
+}
+function tierOf(score){
+  if(score>=16){ return {cls:'high', label:'高上头 · ≥16分'}; }
+  if(score>=8){ return {cls:'mid', label:'中等上头 · 8~15分'}; }
+  return {cls:'low', label:'低上头 · ≤7分'};
+}
+
+/* ===== 结果渲染 ===== */
+var SIX_ICONS = [
+  '<path fill="currentColor" d="M12 21s-7.2-4.4-7.2-9.4c0-2.3 1.8-4 4-4 1.6 0 2.6.8 3.2 1.8.6-1 1.6-1.8 3.2-1.8 2.2 0 4 1.7 4 4 0 5-7.2 9.4-7.2 9.4z"/>',
+  '<path fill="currentColor" d="M4 6h16v12H4V6zm2 2v8h12V8H6zm4 2h4v4h-4v-4zm2 1v2h2v-2h-2z"/>',
+  '<path fill="currentColor" d="M12 4a8 8 0 100 16 8 8 0 000-16zm-1 2.1a6 6 0 11-5 9.3V6.1zm0 2.4v6.3l4.9 2.8-.9 1.6L9.1 16V8.5h1.9z"/>',
+  '<path fill="currentColor" d="M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5l8-3zm0 2.3L6 6.7V11c0 3.9 2.5 7.3 6 8.7 3.5-1.4 6-4.8 6-8.7V6.7l-6-2.4zm-1 9.4V8h2v5.7c.9.6 1.4 1.5 1.4 2.6 0 1.7-1.3 3-3 3s-3-1.3-3-3c0-1.1.5-2 1.4-2.6z"/>',
+  '<path fill="currentColor" d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm1-8.2V6h-2v6.4l4.2 2.5 1-1.7-3.2-1.9z"/>',
+  '<path fill="currentColor" d="M12 3L2 12h3v8h6v-5h2v5h6v-8h3L12 3zm4.5 8h-2V8h-1v3h-2L12 8.8 10.5 11h-2l3.5-6 3.5 6z"/>'
+];
+
+function renderResult(noScroll){
+  var scores = getScores();
+  var pct = scores.map(function(x){ return Math.round(x/QUESTIONS.length*100); });
+  var order = [0,1,2,3].slice().sort(function(a,b){ return scores[b]-scores[a]; });
+  var main = order[0], sec = order[1];
+  var mainD = DIMS[main], secD = DIMS[sec];
+  var prof = PROFILES[mainD.key], secProf = PROFILES[secD.key];
+
+  /* Hero */
+  document.getElementById('res-hero-type').innerHTML = '<span class="main">'+prof.name+'</span>';
+  document.getElementById('res-hero-sub').innerHTML = '主打：'+prof.tag;
+  document.getElementById('res-hero-mix').innerHTML =
+    '<svg width="16" height="16" viewBox="0 0 24 24" style="color:var(--rose2)"><path fill="currentColor" d="M12 21s-7.2-4.4-7.2-9.4c0-2.3 1.8-4 4-4 1.6 0 2.6.8 3.2 1.8.6-1 1.6-1.8 3.2-1.8 2.2 0 4 1.7 4 4 0 5-7.2 9.4-7.2 9.4z"/></svg>' +
+    '主辅人格混合：<b>'+mainD.name+' × '+secD.name+'</b>　'+prof.core+'，也'+secProf.core;
+
+  /* 测试得分 */
+  var sg = document.getElementById('res-score-grid');
+  sg.innerHTML = '';
+  for(var i=0;i<4;i++){
+    var cell = document.createElement('div');
+    cell.className = 'score-cell';
+    cell.innerHTML = '<div class="sc-dot" style="background:'+DIMS[i].color+'"></div>' +
+      '<div class="sc-name">'+DIMS[i].name+'</div>' +
+      '<div class="sc-num" style="color:'+DIMS[i].color+'">'+scores[i]+'</div>' +
+      '<div class="sc-total">/ '+QUESTIONS.length+' 分</div>';
+    sg.appendChild(cell);
+  }
+
+  /* 维度图：雷达 + 进度条 */
+  var box = document.getElementById('radar-box');
+  box.innerHTML = '';
+  if(window.__radarChart){ window.__radarChart.dispose(); window.__radarChart = null; }
+  if(window.__echartsOk && typeof echarts !== 'undefined'){
+    window.__radarChart = echarts.init(box);
+    window.__radarChart.setOption({
+      tooltip:{trigger:'item', triggerOn:'click', renderMode:'richText', confine:true},
+      radar:{
+        indicator:[
+          {name:'偏执治愈', max:100},{name:'双强宿命', max:100},
+          {name:'松弛鲜活', max:100},{name:'烟火长情', max:100}
+        ],
+        radius:'64%', center:['50%','52%'], splitNumber:4,
+        axisName:{color:'#4A322B', fontSize:13, fontWeight:700},
+        splitArea:{areaStyle:{color:['rgba(255,255,255,0)','#FBF0EA']}},
+        splitLine:{lineStyle:{color:'#F0DCD0'}},
+        axisLine:{lineStyle:{color:'#F0DCD0'}}
+      },
+      series:[{
+        type:'radar',
+        data:[{value:pct, name:'上头值', symbol:'circle', symbolSize:6,
+          itemStyle:{color:'#E8625F'},
+          lineStyle:{width:2.5, color:'#E8625F'},
+          areaStyle:{color:'rgba(232,98,95,.18)'},
+          label:{show:true, formatter:function(p){ return p.value+'%'; }, color:'#4A322B', fontSize:11}
+        }]
+      }]
+    });
+  } else {
+    box.innerHTML = '<div class="radar-fallback">'+radarSVG(pct)+'</div>';
+  }
+
+  var bl = document.getElementById('bar-list');
+  bl.innerHTML = '';
+  for(var b=0;b<4;b++){
+    var row = document.createElement('div');
+    row.className = 'bar-row';
+    row.innerHTML =
+      '<div class="bar-top">' +
+        '<span class="bar-name"><i style="background:'+DIMS[b].color+'"></i>'+DIMS[b].name+
+          ' <small>'+DIMS[b].sub+'</small></span>' +
+        '<span class="bar-val" style="color:'+DIMS[b].color+'">'+pct[b]+'<small>%</small></span>' +
+      '</div>' +
+      '<div class="bar-track"><div class="bar-fill" style="background:linear-gradient(90deg,'+DIMS[b].color+','+DIMS[b].color+'cc)"></div></div>';
+    bl.appendChild(row);
+  }
+  setTimeout(function(){
+    var fills = bl.querySelectorAll('.bar-fill');
+    for(var f=0;f<fills.length;f++){ fills[f].style.width = pct[f] + '%'; }
+  }, 80);
+
+  /* 四维分项解读 */
+  var tc = document.getElementById('tier-cards');
+  tc.innerHTML = '';
+  for(var t=0;t<4;t++){
+    var d = DIMS[t], tier = tierOf(scores[t]);
+    var text = TIERS[d.key][tier.cls];
+    var card = document.createElement('div');
+    card.className = 'tier-card';
+    card.innerHTML =
+      '<div class="tier-top">' +
+        '<span style="display:inline-block;width:10px;height:10px;border-radius:3px;background:'+d.color+'"></span>' +
+        '<span class="tier-name" style="color:'+d.color+'">'+d.name+'上头值</span>' +
+        '<span class="tier-tag '+tier.cls+'">'+tier.label+'</span>' +
+        '<span class="tier-mini">'+scores[t]+' / 25 · '+pct[t]+'%</span>' +
+      '</div>' +
+      '<p class="tier-text">'+text+'</p>';
+    tc.appendChild(card);
+  }
+
+  /* 主人格深度画像 */
+  var ph = document.getElementById('res-profile');
+  ph.innerHTML =
+    '<div class="profile-hero">' +
+      '<div class="profile-icon" style="background:linear-gradient(135deg,'+mainD.color+',#E88A7A)">' +
+        '<svg width="34" height="34" viewBox="0 0 24 24">'+mainD.ic+'</svg>' +
+      '</div>' +
+      '<div class="profile-title"><div class="pt1">'+prof.name+'</div><div class="pt2">'+prof.tag+'</div></div>' +
+    '</div>' +
+    '<div class="profile-block"><h4><svg width="15" height="15" viewBox="0 0 24 24" style="color:'+mainD.color+'"><path fill="currentColor" d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>个人深度画像</h4><p>'+prof.image+'</p></div>' +
+    '<div class="profile-block"><h4><svg width="15" height="15" viewBox="0 0 24 24" style="color:'+mainD.color+'"><path fill="currentColor" d="M12 2l3 6.5L22 9l-5 4.5L18.5 21 12 17l-6.5 4L7 13.5 2 9l7-.5z"/></svg>CP审美溯源</h4><p>'+prof.origin+'</p></div>' +
+    '<div class="profile-block"><h4><svg width="15" height="15" viewBox="0 0 24 24" style="color:'+mainD.color+'"><path fill="currentColor" d="M12 21s-7.2-4.4-7.2-9.4c0-2.3 1.8-4 4-4 1.6 0 2.6.8 3.2 1.8.6-1 1.6-1.8 3.2-1.8 2.2 0 4 1.7 4 4 0 5-7.2 9.4-7.2 9.4z"/></svg>你的精准理想型</h4><ul>'+prof.ideal.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></div>' +
+    '<div class="profile-block"><h4><svg width="15" height="15" viewBox="0 0 24 24" style="color:'+mainD.color+'"><path fill="currentColor" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>最适配你的CP组合</h4><div class="chips">'+prof.cps.map(function(x){return '<span class="chip good">'+x+'</span>';}).join('')+'</div></div>' +
+    '<div class="profile-block"><h4><svg width="15" height="15" viewBox="0 0 24 24" style="color:'+mainD.color+'"><path fill="currentColor" d="M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5l8-3zm0 2.3L6 6.7V11c0 3.9 2.5 7.3 6 8.7 3.5-1.4 6-4.8 6-8.7V6.7l-6-2.4z"/></svg>绝对避雷对象</h4><div class="chips">'+prof.avoid.map(function(x){return '<span class="chip warn">'+x+'</span>';}).join('')+'</div></div>' +
+    '<div class="profile-block"><h4><svg width="15" height="15" viewBox="0 0 24 24" style="color:'+mainD.color+'"><path fill="currentColor" d="M12 2a10 10 0 100 20 10 10 0 000-20zm-1 4h2v6.4l4.2 2.5-1 1.7L11 14V6z"/></svg>专属恋爱成长建议</h4><ul>'+prof.advice.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></div>';
+
+  /* 辅人格加成 */
+  var se = document.getElementById('res-secondary');
+  var secTier = TIERS[secD.key][tierOf(scores[sec]).cls];
+  se.innerHTML =
+    '<div class="sec-card">' +
+      '<div class="sec-icon" style="background:linear-gradient(135deg,'+secD.color+',#9BB3D6)">' +
+        '<svg width="24" height="24" viewBox="0 0 24 24">'+secD.ic+'</svg></div>' +
+      '<div class="sec-body">' +
+        '<h4>辅人格加成 · '+secD.name+'</h4>' +
+        '<div class="sec-tag">'+secProf.tag+'</div>' +
+        '<p>你的爱情审美不止一种底色：<b>'+secD.name+'</b>维度同样点亮了你。'+secTier+'</p>' +
+        '<div class="chips" style="margin-top:10px">'+secProf.cps.map(function(x){return '<span class="chip">'+x+'</span>';}).join('')+'</div>' +
+      '</div>' +
+    '</div>';
+
+  /* 六大维度 */
+  var six = document.getElementById('six-grid');
+  six.innerHTML = '';
+  for(var s6=0;s6<prof.six.length;s6++){
+    var item = prof.six[s6];
+    var cell = document.createElement('div');
+    cell.className = 'six-cell';
+    cell.innerHTML =
+      '<div class="six-no">0'+(s6+1)+'</div>' +
+      '<div class="six-ic" style="background:'+mainD.soft+';color:'+mainD.color+'">' +
+        '<svg width="18" height="18" viewBox="0 0 24 24">'+SIX_ICONS[s6]+'</svg></div>' +
+      '<h5>'+item.t+'</h5><p>'+item.d+'</p>';
+    six.appendChild(cell);
+  }
+
+  /* 配对公式：匹配度 = 40% + 60% × (主人格得分 + 目标维度得分) ÷ 50 */
+  var mg = document.getElementById('match-grid');
+  mg.innerHTML = '';
+  var matchList = DIMS.map(function(d,idx){
+    return {dim:d, pct: Math.round(40 + 60*(scores[main]+scores[idx])/50)};
+  }).sort(function(a,b){ return b.pct-a.pct; });
+  for(var m=0;m<matchList.length;m++){
+    var mm = matchList[m], md = mm.dim, mp = PROFILES[md.key];
+    var card = document.createElement('div');
+    card.className = 'match-card' + (m===0 ? ' best' : '');
+    card.innerHTML =
+      '<div class="match-top">' +
+        '<div class="match-ic" style="background:linear-gradient(135deg,'+md.color+',#E88A7A)">' +
+          '<svg width="19" height="19" viewBox="0 0 24 24">'+md.ic+'</svg></div>' +
+        '<div class="match-name">'+mp.name+'<div style="font-size:11px;color:var(--ink2);font-weight:400">'+md.sub+'</div></div>' +
+      '</div>' +
+      '<div class="match-pct"><span class="big" style="color:'+md.color+'">'+mm.pct+'</span><small>% 匹配度</small></div>' +
+      '<div class="match-cps">理想CP：'+mp.cps.slice(0,2).join(' · ')+'</div>';
+    mg.appendChild(card);
+  }
+
+  if(!noScroll){ window.scrollTo(0,0); }
+}
+
+/* ===== 雷达图 SVG 降级 ===== */
+function radarSVG(vals){
+  var cx=150, cy=138, R=92, n=4, i, a, pts=[], html;
+  var names=['偏执治愈','双强宿命','松弛鲜活','烟火长情'];
+  var colors=['#D4576E','#5E7FB0','#E29A3C','#B0764E'];
+  html = '<svg width="300" height="276" viewBox="0 0 300 276" role="img" aria-label="四维上头值雷达图" style="max-width:100%">';
+  for(var r=1;r<=4;r++){
+    pts=[];
+    for(i=0;i<n;i++){ a=-Math.PI/2+i*2*Math.PI/n; pts.push((cx+R*r/4*Math.cos(a)).toFixed(1)+','+(cy+R*r/4*Math.sin(a)).toFixed(1)); }
+    html += '<polygon points="'+pts.join(' ')+'" fill="'+(r%2?'#FBF0EA':'none')+'" stroke="#F0DCD0" stroke-width="1"/>';
+  }
+  for(i=0;i<n;i++){
+    a=-Math.PI/2+i*2*Math.PI/n;
+    html += '<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+R*Math.cos(a)).toFixed(1)+'" y2="'+(cy+R*Math.sin(a)).toFixed(1)+'" stroke="#F0DCD0" stroke-width="1"/>';
+    var lx=cx+(R+26)*Math.cos(a), ly=cy+(R+26)*Math.sin(a);
+    var anchor = Math.abs(Math.cos(a))<0.3 ? 'middle' : (Math.cos(a)>0 ? 'start' : 'end');
+    html += '<text x="'+lx.toFixed(1)+'" y="'+(ly+4).toFixed(1)+'" text-anchor="'+anchor+'" font-size="12.5" font-weight="700" fill="#4A322B">'+names[i]+'</text>';
+  }
+  var dpts=[];
+  for(i=0;i<n;i++){ a=-Math.PI/2+i*2*Math.PI/n; var v=Math.max(3,vals[i])/100; dpts.push((cx+R*v*Math.cos(a)).toFixed(1)+','+(cy+R*v*Math.sin(a)).toFixed(1)); }
+  html += '<polygon points="'+dpts.join(' ')+'" fill="rgba(232,98,95,.18)" stroke="#E8625F" stroke-width="2.5"/>';
+  for(i=0;i<n;i++){
+    a=-Math.PI/2+i*2*Math.PI/n; var vv=Math.max(3,vals[i])/100;
+    var px=cx+R*vv*Math.cos(a), py=cy+R*vv*Math.sin(a);
+    html += '<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="4" fill="'+colors[i]+'"/>';
+    html += '<text x="'+(px+ (Math.cos(a)>0.5?10:(Math.cos(a)<-0.5?-10:0))).toFixed(1)+'" y="'+(py-6).toFixed(1)+'" text-anchor="'+(Math.abs(Math.cos(a))<0.5?'middle':(Math.cos(a)>0?'start':'end'))+'" font-size="11" font-weight="700" fill="'+colors[i]+'">'+vals[i]+'%</text>';
+  }
+  html += '</svg>';
+  return html;
+}
+
+/* ===== Toast ===== */
+var toastTimer = null;
+function toast(msg){
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  if(toastTimer){ clearTimeout(toastTimer); }
+  toastTimer = setTimeout(function(){ el.classList.remove('show'); }, 2400);
+}
+
+/* ===== 分享 ===== */
+function buildShareText(){
+  var scores = getScores();
+  var pct = scores.map(function(x){ return Math.round(x/QUESTIONS.length*100); });
+  var order = [0,1,2,3].slice().sort(function(a,b){ return scores[b]-scores[a]; });
+  var prof = PROFILES[DIMS[order[0]].key];
+  return '【你磕的CP，暴露了你理想中的爱情】\n' +
+    '我的恋爱人格：'+prof.name+'（主辅：'+DIMS[order[0]].name+' × '+DIMS[order[1]].name+'）\n' +
+    '四维上头值：偏执治愈 '+pct[0]+'% ｜ 双强宿命 '+pct[1]+'% ｜ 松弛鲜活 '+pct[2]+'% ｜ 烟火长情 '+pct[3]+'%\n' +
+    '最适配CP：'+prof.cps.join('、')+'\n' +
+    '来测测你的理想爱情长什么样~';
+}
+function shareResult(){
+  var text = buildShareText();
+  if(navigator.share){
+    navigator.share({title:document.title, text:text}).catch(function(){});
+  } else if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){ toast('结果文案已复制，去分享给朋友吧'); },
+      function(){ toast('复制失败，请手动截图分享'); });
+  } else {
+    toast('请截图分享你的专属报告');
+  }
+}
+document.getElementById('btn-share').addEventListener('click', shareResult);
+document.getElementById('btn-share-top').addEventListener('click', shareResult);
+
+/* ===== 重新测试 ===== */
+function retest(){
+  answers = new Array(QUESTIONS.length).fill(null);
+  cur = 0;
+  location.hash = '#quiz';
+}
+document.getElementById('btn-retest').addEventListener('click', retest);
+document.getElementById('btn-retest-top').addEventListener('click', retest);
+
+/* ===== ECharts 双备源加载（jsdelivr → cdnjs），均失败时用 SVG 雷达兜底 ===== */
+window.__echartsOk = false;
+window.__radarChart = null;
+window.addEventListener('resize', function(){ if(window.__radarChart){ window.__radarChart.resize(); } });
+(function(){
+  function trySrc(src){
+    var s = document.createElement('script');
+    s.src = src;
+    s.onload = function(){
+      window.__echartsOk = true;
+      if((location.hash||'').indexOf('result') >= 0){ renderResult(true); }
+    };
+    s.onerror = function(){
+      if(src.indexOf('jsdelivr') >= 0){ trySrc('https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js'); }
+    };
+    document.head.appendChild(s);
+  }
+  trySrc('https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js');
+  /* 兜底：6 秒内库仍未就绪，则用内联 SVG 雷达渲染，避免结果页雷达区空白 */
+  setTimeout(function(){
+    if(!window.__echartsOk && (location.hash||'').indexOf('result') >= 0){ renderResult(true); }
+  }, 6000);
+})();
+
+/* ===== 初始化 ===== */
+route();
+</script>
+</body>
+</html>
